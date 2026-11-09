@@ -1,0 +1,6 @@
+AtomVLA research code
+Copyright 2026 AtomVLA contributors
+
+Includes components derived from VLA-Delta, licensed under Apache-2.0.
+See training/vendor_delta/LICENSE, training/vendor_delta/SOURCE.json and
+THIRD_PARTY_NOTICES.md for provenance and third-party terms.

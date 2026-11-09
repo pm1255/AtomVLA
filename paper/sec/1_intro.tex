@@ -1,0 +1,61 @@
+\section{Introduction}
+\label{sec:intro}
+
+Embodied policies have made substantial progress, yet generalization and long-horizon manipulation remain challenging. Changes in objects, goals, viewpoints, or task composition can demand additional demonstrations or adaptation. A prominent response is to scale vision-language pretraining and robot demonstration data~\cite{rt1,rt2,palme,oxembodiment,octo,openvla,pi05,oft}. This broadens behavioral coverage, but leaves an important question: how can a policy reuse a learned physical operation when its context changes, rather than requiring separate examples for every combination of object, goal, and scene?
+
+We hypothesize that an implicit execution interface contributes to this repeated learning. Many policies map observations and instructions to actions without explicitly identifying the active operation, its start and end boundaries, its completion condition, or the execution structure shared with other tasks. The same pick--move--place pattern may therefore appear in many demonstrations without an explicit unit through which to share it. Such an interface also makes long tasks harder to decompose and failures harder to localize. Our focus is \emph{data efficiency}: reducing the demonstrations needed to acquire transferable behavior. This is distinct from reducing inference latency or physical execution time, which must be measured separately.
+
+Semantics provides a natural starting point for reuse, but does not determine physical execution. A \texttt{pick} operation retains its meaning across objects while requiring different contact regions, approach directions, end-effector poses, and trajectories. Likewise, ``place the object in the basket'' specifies a goal without fixing its motor realization. Stable semantics and variable execution details must therefore coexist in a useful primitive representation. Action-sequence policies~\cite{diffpolicy,act} model rich motor behavior, while multimodal prompting and hierarchical planning~\cite{vima,saycan,progprompt,inner} expose task structure; the remaining challenge is to connect reusable operation structure to scene-specific control.
+
+An atomic execution representation should expose five properties: stable operation semantics, explicit boundaries and completion contracts, references to current objects and targets, a separation between reusable structure and geometric details, and a mechanism for recovering those details from the current observation. Typed program calls provide a concrete way to express this interface. A call names an operation, declares its reference and parameter slots, and specifies when execution is complete. Its schema can be checked and composed with other calls; the concrete object bindings and continuous values are resolved anew in each scene. The reusable element is the operation and its typed argument/contract structure, not a fixed object identity or trajectory.
+
+\begin{figure*}[t]
+\centering
+\begin{tikzpicture}[>=Latex,font=\small,
+ task/.style={draw=atomblue,fill=atomlight,rounded corners=3pt,align=center,text width=45mm,minimum height=10mm},
+ pick/.style={draw=atomgold,fill=atomgold!12,rounded corners=2pt,align=center,text width=13mm,minimum height=8mm},
+ move/.style={pick,draw=atomblue,fill=atomblue!9},
+ place/.style={pick,draw=atomteal,fill=atomteal!10},
+ arr/.style={->,thick,draw=atomblue}]
+\node[task] (a) at (0,0) {Task A: cup on shelf};
+\node[task] (b) at (5.6,0) {Task B: tool in drawer};
+\node[task] (c) at (11.2,0) {New task: pack two objects};
+\node[pick] (a1) at (-1.65,-1.35) {pick};
+\node[move] (a2) at (0,-1.35) {move};
+\node[place] (a3) at (1.65,-1.35) {place};
+\node[pick] (b1) at (3.95,-1.35) {pick};
+\node[move] (b2) at (5.6,-1.35) {move};
+\node[place] (b3) at (7.25,-1.35) {place};
+\node[pick] (c1) at (9.55,-1.35) {pick};
+\node[move] (c2) at (11.2,-1.35) {move};
+\node[place] (c3) at (12.85,-1.35) {place};
+\foreach \x/\y in {a1/a2,a2/a3,b1/b2,b2/b3,c1/c2,c2/c3}{\draw[arr] (\x)--(\y);}
+\draw[arr] (a)--(a2);\draw[arr] (b)--(b2);\draw[arr] (c)--(c2);
+\node[align=center,font=\footnotesize] at (0,-2.15) {cup / shelf / pose A};
+\node[align=center,font=\footnotesize] at (5.6,-2.15) {tool / drawer / pose B};
+\node[align=center,font=\footnotesize] at (11.2,-2.15) {repeat and rebind for each object};
+\node[task,text width=145mm,minimum height=12mm] (shared) at (5.6,-3.25)
+{Shared atomic interface: operation + typed references + argument slots + completion contract\\
+\footnotesize Reuse the operation schema; recover geometry from the current scene; check each completed step.};
+\end{tikzpicture}
+\caption{\textbf{Why atomic actions matter.} Tasks with different objects and goals share physical operations. Typed atoms expose reusable boundaries and contracts while scene-specific references and geometry change. Rebinding and composing familiar calls supports new task sequences and localizes failed steps, instead of requiring an independent representation for every whole-task variation. These are the proposed mechanisms, not measured efficiency gains.}
+\label{fig:motivation}
+\end{figure*}
+
+Programs provide structure, but symbols alone do not provide grounding. Reusing the same \texttt{pick} or \texttt{place} call still requires estimating a physically appropriate future configuration from the current scene. Program-based control~\cite{codeaspolicies,progprompt,aw0} motivates an inspectable intermediate interface, while representations of physical semantics and state transitions~\cite{physicalwords,vladelta} motivate grounding that interface in its expected outcome. We combine these ideas by separating the discrete call, its terminal geometry, and its imagined visual evolution. A typed call is a structured intent interface; it need not contain an executable function body.
+
+We propose \model{}, in which the text branch generates an atomic name and string-valued arguments, and a \emph{program-conditioned action Query} supplies the continuous parameters: terminal end-effector position and orientation. Query predicts only this endpoint, not a sequence of intermediate poses. To represent what happens within the primitive, a future-imagination expert generates a primitive-dependent sequence of event keyframes conditioned on the current scene, the call, and terminal geometry. This learned evolution replaces an explicitly generated procedural body. For example, a pick may be represented by imagined pregrasp, closure, and lift keyframes rather than generated control statements.
+
+The action expert reads the shared Query, robot state, and imagined visual tokens to generate continuous actions. Image and action tokens remain concatenated within a mixture-of-transformers (MoT) and jointly denoise through modality-specific experts. Thus imagined visual evolution supplies intermediate context, while the action expert learns timing, contact adjustments, and gripper control. Neither a plausible image sequence nor an accurate endpoint guarantees successful execution.
+
+Our code-data pipeline binds each discrete call to synchronized current observations, robot state, one completion pose per active arm, an ordered future-image sequence, and demonstrated actions. Following prior robot data engines~\cite{robomimic,mimicgen,oxembodiment}, it records boundaries, timestamps, coordinate frames, and validity masks. Future frames supervise imagination during training and are never inference inputs. At runtime, the policy executes a short action prefix, observes the result, and regenerates the remaining evolution or advances according to the observed completion condition.
+
+The resulting hypothesis is that explicit reusable structure, coupled with scene-dependent geometric grounding, can improve transfer and composition with fewer demonstrations. This benefit is not guaranteed by program syntax or pose prediction alone. We test it through matched data-budget comparisons, held-out contexts, component ablations, memory interventions, and planner--controller feedback controls. Task success remains the primary outcome; intermediate prediction accuracy and feature clustering are supporting measurements.
+
+Our contributions are:
+\begin{itemize}
+\item a typed atomic-program interface that separates reusable operation structure from scene-specific execution details, targeting cross-context reuse and long-horizon composition;
+\item a code-data pipeline aligning each call with current observations, terminal poses, ordered future-image sequences, and demonstrated actions;
+\item a terminal-pose action Query and future imagination that separate endpoint grounding from within-primitive visual evolution, conditioning continuous control through concatenated image/action MoT experts;
+\item a matched evaluation protocol for data efficiency, primitive reuse, multimodal conditioning, and physical execution, with controls that distinguish architectural hypotheses from measured benefits.
+\end{itemize}

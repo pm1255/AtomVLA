@@ -1,0 +1,832 @@
+[
+  {
+    "path": ".github/workflows/checks.yml",
+    "bytes": 711,
+    "sha256": "94225f1533492b4ab686f35ae9f3978baa46d8b114d248910a4a4eb914b5938b"
+  },
+  {
+    "path": ".gitignore",
+    "bytes": 288,
+    "sha256": "e126de08cf63e81317c713a3ed489b4c4f0a0bc02de6f62a719b394b8ca3133b"
+  },
+  {
+    "path": "LICENSE",
+    "bytes": 11357,
+    "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+  },
+  {
+    "path": "NOTICE",
+    "bytes": 264,
+    "sha256": "6d3198956a2fe8466a1c2434c0c071c1034f92a9dfa6b1dd9f75aba9aaf52557"
+  },
+  {
+    "path": "README.md",
+    "bytes": 4131,
+    "sha256": "b1aec92582bd88ceb536d38dced65af88d1023b09bc708b08fb7b3f6e829e75d"
+  },
+  {
+    "path": "README.zh-CN.md",
+    "bytes": 1879,
+    "sha256": "0a09c11f6a56d75afd6147739e00048806c83402c0139939cb818642aee500a3"
+  },
+  {
+    "path": "THIRD_PARTY_NOTICES.md",
+    "bytes": 1651,
+    "sha256": "a083d0eec5057685d30140f8e8284d629bce2d5a2f95ad27438fc77939698e69"
+  },
+  {
+    "path": "code/atomvla-atomic-runtime/atoms.py",
+    "bytes": 6169,
+    "sha256": "d061474d88691a6d602f370e18f3c9ea5f8278cb82b0dbdc83e31f62fa3182b6"
+  },
+  {
+    "path": "code/atomvla-atomic-runtime/episode_bowl_on_plate.py",
+    "bytes": 3646,
+    "sha256": "6562da2e89c2f9a3525417f5d233c792664193c0f13ae2f179815fb3eb47bd31"
+  },
+  {
+    "path": "code/atomvla-atomic-runtime/libero_backend.py",
+    "bytes": 4662,
+    "sha256": "b03d49a4262ed0d58d02bc4395c9953280b61145cb35095d4a5c1db20c9d7168"
+  },
+  {
+    "path": "code/atomvla-atomic-runtime/requirements.txt",
+    "bytes": 199,
+    "sha256": "43858780396d1667435bfd7248b6f68211ceb71bf67d8cfbddc2cfb02c9dc3a7"
+  },
+  {
+    "path": "code/atomvla-atomic-runtime/run_libero.py",
+    "bytes": 3771,
+    "sha256": "afd5f80a9ff96b9e6f01ecdfc371aea101eebd57cf04f6a653426e68f60c1b82"
+  },
+  {
+    "path": "code/atomvla-atomic-runtime/test_runtime.py",
+    "bytes": 5118,
+    "sha256": "4809285bd69c8c640beaf981de895705259e4e6e8d334fe2226d9aa43c3ae0c4"
+  },
+  {
+    "path": "code/atomvla-endpoints/README.md",
+    "bytes": 3694,
+    "sha256": "4dc11328add9e5d3cebfb28eedddbc92cadf9958014fdd11ba44f09f155c9b52"
+  },
+  {
+    "path": "code/atomvla-endpoints/audit_results.py",
+    "bytes": 10976,
+    "sha256": "15d4d713b42c225a91454e3cd12fa3f49c514cfe4aa740bc02ee580c8afeb64b"
+  },
+  {
+    "path": "code/atomvla-endpoints/build_artifacts.py",
+    "bytes": 6237,
+    "sha256": "ddd792f90bb77c1127606b50ecc3390bbfed82e471cf693d0bfcb0678c79074e"
+  },
+  {
+    "path": "code/atomvla-endpoints/build_robotwin_artifacts.py",
+    "bytes": 5321,
+    "sha256": "6ded8f74dcda6c8c5bc260d53b57a38b3d82661b277561a87cab78f7e2e7456b"
+  },
+  {
+    "path": "code/atomvla-endpoints/collect_provenance.py",
+    "bytes": 2070,
+    "sha256": "aefd0365915a352c520a8df92a9417e287fe0e82271dc60c91664f75f1010ca1"
+  },
+  {
+    "path": "code/atomvla-endpoints/derive_robotwin_tcp.py",
+    "bytes": 4357,
+    "sha256": "eefc189c8ea0b44f4b574a710f501b21e94e78666226e6def7c0f9f522698c11"
+  },
+  {
+    "path": "code/atomvla-endpoints/final_summary_to_tensorboard.py",
+    "bytes": 1256,
+    "sha256": "ef54929af07375b4423fecf8ec9e06957251003cec96c1e70ac9f8c883d2d707"
+  },
+  {
+    "path": "code/atomvla-endpoints/geometry.py",
+    "bytes": 6291,
+    "sha256": "095f040abce83cd46cb8400ac90f9f2686243abd2c8dbbd3f7c406851a3d2537"
+  },
+  {
+    "path": "code/atomvla-endpoints/libero_pilot.py",
+    "bytes": 14276,
+    "sha256": "7f627ff82d65a2f5aa53ba7a87403566224442ac27a79c664f4ef1a231ae766c"
+  },
+  {
+    "path": "code/atomvla-endpoints/monitor.py",
+    "bytes": 1486,
+    "sha256": "ed62b75584a72665e5825f6a20a47e64c3947a2d5394f38d4b3720dd50f3ead2"
+  },
+  {
+    "path": "code/atomvla-endpoints/robotwin_pilot.py",
+    "bytes": 12521,
+    "sha256": "d323380dc4cd567093f1a194310ce4972806d6b113fd774a830f3052f79507a7"
+  },
+  {
+    "path": "code/atomvla-endpoints/status_to_tensorboard.py",
+    "bytes": 782,
+    "sha256": "ee93c742690c7c215b4c10675daead672ffa194cd58376d578f8bea3072ab35e"
+  },
+  {
+    "path": "code/atomvla-endpoints/test_geometry.py",
+    "bytes": 1971,
+    "sha256": "6442c7767636c75acfaa3636469591255a04c92fdb656f01577a78e73da07ece"
+  },
+  {
+    "path": "code/atomvla-evaluation/README.md",
+    "bytes": 2196,
+    "sha256": "babae90e260a38d3c75fcfebeeb4f17cd48f5250c48d2ac8cfdc2de2a99123f6"
+  },
+  {
+    "path": "code/atomvla-evaluation/__init__.py",
+    "bytes": 57,
+    "sha256": "dae91a9f615222d2255ff5eaa1ff2a5ec302521ee4f4220534847a2c74f48b37"
+  },
+  {
+    "path": "code/atomvla-evaluation/adapters/__init__.py",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "code/atomvla-evaluation/adapters/common.py",
+    "bytes": 1421,
+    "sha256": "28999254ef4dacd4ff8253ed1e3061ef8b4fc6ee7a3ac0ab7532d638d2fcc24c"
+  },
+  {
+    "path": "code/atomvla-evaluation/adapters/libero_adapter.py",
+    "bytes": 114,
+    "sha256": "c01968fdc09004c755691ce208d94abdd0c7aa94932ce58cec1eb0eef49a1ec4"
+  },
+  {
+    "path": "code/atomvla-evaluation/adapters/libero_pro_adapter.py",
+    "bytes": 114,
+    "sha256": "c01968fdc09004c755691ce208d94abdd0c7aa94932ce58cec1eb0eef49a1ec4"
+  },
+  {
+    "path": "code/atomvla-evaluation/adapters/real_robot_adapter.py",
+    "bytes": 113,
+    "sha256": "4dbce2dacd4066716490c177ce1c402448a15b03e89967ed0186e1b800834170"
+  },
+  {
+    "path": "code/atomvla-evaluation/adapters/rmbench_adapter.py",
+    "bytes": 114,
+    "sha256": "c01968fdc09004c755691ce208d94abdd0c7aa94932ce58cec1eb0eef49a1ec4"
+  },
+  {
+    "path": "code/atomvla-evaluation/adapters/robotwin_adapter.py",
+    "bytes": 114,
+    "sha256": "c01968fdc09004c755691ce208d94abdd0c7aa94932ce58cec1eb0eef49a1ec4"
+  },
+  {
+    "path": "code/atomvla-evaluation/backends.py",
+    "bytes": 1286,
+    "sha256": "ab3f2e120bdb59c59c8770e9b71f4c666f6ee80e1590b90bc7e09e62f8de0fca"
+  },
+  {
+    "path": "code/atomvla-evaluation/evaluate.py",
+    "bytes": 2996,
+    "sha256": "bdf5c3996264b9d83a89dc4cd0efb856721d8b324c427da127d18c6eefa1a12c"
+  },
+  {
+    "path": "code/atomvla-evaluation/extract_features.py",
+    "bytes": 3193,
+    "sha256": "e1e245d51d98a9aa6ebf19c6690ae6ddd5451eddc7efb3fd7301bbeb4fa03cb4"
+  },
+  {
+    "path": "code/atomvla-evaluation/make_manifests.py",
+    "bytes": 858,
+    "sha256": "3b45162b23e1012fddeaa0791e27ac5d07fb7572c15a338e2c20326989b4f03f"
+  },
+  {
+    "path": "code/atomvla-evaluation/manifests/libero.jsonl",
+    "bytes": 2790,
+    "sha256": "f5b13a1fd82b756f883831eb3ddcc4138db6a5eae8a3b35456a973108de4dc1b"
+  },
+  {
+    "path": "code/atomvla-evaluation/manifests/libero_pro.jsonl",
+    "bytes": 2850,
+    "sha256": "48831acf78f168437b092f90d140e0f68aa37b5bf826ac32e45f366699e4f48b"
+  },
+  {
+    "path": "code/atomvla-evaluation/manifests/real_robot_five_tasks.jsonl",
+    "bytes": 3417,
+    "sha256": "a04cff12bb488a15f1d737142465b88cacb76f62b659d36f353719386b8a3e87"
+  },
+  {
+    "path": "code/atomvla-evaluation/manifests/rmbench_three_tasks.jsonl",
+    "bytes": 2007,
+    "sha256": "2f9c915815689f1f88225ca80cd5a87badd0ffee3d0be272897156055646e18e"
+  },
+  {
+    "path": "code/atomvla-evaluation/manifests/robotwin_three_tasks.jsonl",
+    "bytes": 2085,
+    "sha256": "7f7fafc074781b90a0218dc174a68574b8308f03082b521779a3617c35949737"
+  },
+  {
+    "path": "code/atomvla-evaluation/metrics.py",
+    "bytes": 2206,
+    "sha256": "7c8d7be1c6f4c670048ca5986c2143d84b9656378ce21c279f0d255543ca284a"
+  },
+  {
+    "path": "code/atomvla-evaluation/runner.py",
+    "bytes": 3432,
+    "sha256": "a5fd80ab39cdb0b35aa3a9535a132a55fcf7ac68e9bd5d03c239ace8fbd7ca02"
+  },
+  {
+    "path": "code/atomvla-evaluation/schema.py",
+    "bytes": 2157,
+    "sha256": "9ac229d0470453c706de847ae0e17ffd906e86000a7c8405c403d3cafe4381c3"
+  },
+  {
+    "path": "code/atomvla-evaluation/tb.py",
+    "bytes": 683,
+    "sha256": "7171cbff927f56ddf086a779a0fbd147bb1bcb8ea758c41309659967b23dc6fe"
+  },
+  {
+    "path": "code/atomvla-evaluation/tests/test_evaluation.py",
+    "bytes": 1328,
+    "sha256": "02a1699000940aa9fd67b97021266bfc57661efaae77765d2515417d44a6d03c"
+  },
+  {
+    "path": "code/atomvla-semantic-data/README.md",
+    "bytes": 2061,
+    "sha256": "3a6d4d5d2de22987f1dcbe582b2e0e794eaf87cd3d0edd27bfb7826f65914134"
+  },
+  {
+    "path": "code/atomvla-semantic-data/production/README.md",
+    "bytes": 3781,
+    "sha256": "f7fce3ebaf03c066a35a959d46601e0792936feb2d3b5fdf5ef53d2cb8662112"
+  },
+  {
+    "path": "code/atomvla-semantic-data/production/aggregate_large_scale.py",
+    "bytes": 1385,
+    "sha256": "cb299ede062d79fc781a115d7a13de1adc8f4b982198854ff79255ad07a08c0f"
+  },
+  {
+    "path": "code/atomvla-semantic-data/production/annotate.py",
+    "bytes": 5126,
+    "sha256": "8af3d2397210996313e09097fb976479a1a26fd876a7e3faed1ed162e1436516"
+  },
+  {
+    "path": "code/atomvla-semantic-data/production/audit.py",
+    "bytes": 2091,
+    "sha256": "ecfd169da5108b0b1f4e3e4e454a349f5a1a1452134f489c847f60ef8786b8c3"
+  },
+  {
+    "path": "code/atomvla-semantic-data/production/audit_event_grounding.py",
+    "bytes": 2776,
+    "sha256": "ecac482f91a0af5af8f92add53c0af43f144d34b925f8b6be36c61051e6c0207"
+  },
+  {
+    "path": "code/atomvla-semantic-data/production/audit_full_coverage.py",
+    "bytes": 4684,
+    "sha256": "b731ef8af447b1cafa9faa39c5a2c9dc0f8732570a449435668e2041739bcfb2"
+  },
+  {
+    "path": "code/atomvla-semantic-data/production/auto_only_policy.py",
+    "bytes": 2779,
+    "sha256": "0df100cc6dddd7c871a6940e6eefedf58a10447c63821539d71e883719815621"
+  },
+  {
+    "path": "code/atomvla-semantic-data/production/auto_only_release.py",
+    "bytes": 2717,
+    "sha256": "4fe4dc4efc962161571fd82cc12a1c2855fa788790b68ec69e0082959201fa7b"
+  },
+  {
+    "path": "code/atomvla-semantic-data/production/batch.py",
+    "bytes": 6366,
+    "sha256": "8079e0dadfe6503de0aa67725d34039c72d9ea7dc7bd4693cb510a7a230c03f8"
+  },
+  {
+    "path": "code/atomvla-semantic-data/production/candidate_policy.py",
+    "bytes": 1717,
+    "sha256": "62d5dd3c6ec11715b2e0797a2353e47d1982405beccaf3ad4ea5149346c60c95"
+  },
+  {
+    "path": "code/atomvla-semantic-data/production/common.py",
+    "bytes": 1181,
+    "sha256": "c439b3b090c93ca138cff3bba68aad8500458322717613fb3b30a7a03560d52e"
+  },
+  {
+    "path": "code/atomvla-semantic-data/production/complete_annotation.py",
+    "bytes": 4898,
+    "sha256": "449aa9a5b8babfe23612d904cfb1b76825efa23662918ad377bc57f08533b66e"
+  },
+  {
+    "path": "code/atomvla-semantic-data/production/convert_archive.py",
+    "bytes": 7096,
+    "sha256": "b63210a3eace6dc2947691f06f8a7c56a211bbb70d0093219ffb1372909b540e"
+  },
+  {
+    "path": "code/atomvla-semantic-data/production/convert_existing.py",
+    "bytes": 7915,
+    "sha256": "9de19b434d7821fa75d940e7325185a169c6055ab3db383b83f5350570271001"
+  },
+  {
+    "path": "code/atomvla-semantic-data/production/deterministic_semantics.py",
+    "bytes": 10732,
+    "sha256": "03d0189a8176f75cd7512efaeb4b9ac4bbdf0395776efe3c944d9d76c9d90a00"
+  },
+  {
+    "path": "code/atomvla-semantic-data/production/export_annotation_review.py",
+    "bytes": 2728,
+    "sha256": "ce0612624db384698fa3daf586065d2b22a4187f480b2b2e3301a77bc8960979"
+  },
+  {
+    "path": "code/atomvla-semantic-data/production/full_release_gate.py",
+    "bytes": 792,
+    "sha256": "613dbb83a87670145d501da621159a1c7a25b1d2cd6f07e1be2d4e1c160d4e06"
+  },
+  {
+    "path": "code/atomvla-semantic-data/production/full_visual_convert.py",
+    "bytes": 15965,
+    "sha256": "dcdafb1abc16d6a53fb12838fd970edbf837a94b2d6754ae098f0f4af1848005"
+  },
+  {
+    "path": "code/atomvla-semantic-data/production/full_visual_release.py",
+    "bytes": 5017,
+    "sha256": "b5a0be3e66ffbf904c48ee1efbeae5f1569be18a432e5cdfaf66bb2efbbcad60"
+  },
+  {
+    "path": "code/atomvla-semantic-data/production/grounded_adapter.py",
+    "bytes": 1983,
+    "sha256": "8d8d397bf972e897b0e16c6331e79b58bf85f07b44303ba8a7487ad1d680c90f"
+  },
+  {
+    "path": "code/atomvla-semantic-data/production/libero_state_evidence.py",
+    "bytes": 3746,
+    "sha256": "5284cc27c258adaeb2f149d572a7badd21d6aa99517422fa7f6c8112c01ce7cf"
+  },
+  {
+    "path": "code/atomvla-semantic-data/production/loader.py",
+    "bytes": 3340,
+    "sha256": "f240cc187c49d7af02185f49477678226cc9eb8ed22c4e1462658d6b0c1248fd"
+  },
+  {
+    "path": "code/atomvla-semantic-data/production/local_semantics.py",
+    "bytes": 13496,
+    "sha256": "2653dc6f181f429a2b5fe1501149e9b272631a271d533f3b7c176c6f624b4992"
+  },
+  {
+    "path": "code/atomvla-semantic-data/production/monitor.py",
+    "bytes": 772,
+    "sha256": "53373410be2f1000889792aa00d990a1f261a744a82bc4c8a97c22bbb9eebb62"
+  },
+  {
+    "path": "code/atomvla-semantic-data/production/multisource_batch.py",
+    "bytes": 4360,
+    "sha256": "a4466094f5bcae779a2399b8c187f1816530aa7471696ff1ea52e69f121530f4"
+  },
+  {
+    "path": "code/atomvla-semantic-data/production/preflight_large_scale.py",
+    "bytes": 5822,
+    "sha256": "b4b1f5a37d6a303984036c8400af7c86695f152104b15ba6384669947c2774a3"
+  },
+  {
+    "path": "code/atomvla-semantic-data/production/records.py",
+    "bytes": 2922,
+    "sha256": "44837b9742a06119378371fd3201aac7ba20c862653c351bf4dedb4dea76ad95"
+  },
+  {
+    "path": "code/atomvla-semantic-data/production/release.py",
+    "bytes": 7774,
+    "sha256": "7a8cb4c31a203cf7831d798ec023b39f2325dd46644c7a4043cc2a56e52bf62c"
+  },
+  {
+    "path": "code/atomvla-semantic-data/production/release_existing.py",
+    "bytes": 3732,
+    "sha256": "135623c8cebe1104b890bbc70876be8ad61fc0dac14d969a4dfc006c9fc2d501"
+  },
+  {
+    "path": "code/atomvla-semantic-data/production/replay_semantic_audit.py",
+    "bytes": 15114,
+    "sha256": "3dbc758b2369cbbc2eb90f590863902ef5fc89aef6b000b7e7d1049daf6eb9ef"
+  },
+  {
+    "path": "code/atomvla-semantic-data/production/robotwin_adapter.py",
+    "bytes": 3343,
+    "sha256": "84f27a347381444f8c377099a4a15a62a1575dec27af55f3d475b3ed2cb6561d"
+  },
+  {
+    "path": "code/atomvla-semantic-data/production/source_events.py",
+    "bytes": 4330,
+    "sha256": "a52039c4aff6f7597dc7be421c516f7d20bd8856120875b8cf33e289fadca18d"
+  },
+  {
+    "path": "code/atomvla-semantic-data/production/source_policy.json",
+    "bytes": 835,
+    "sha256": "dcd9443bd1aa0c022521d77d568a583bae612d5aededf6ca5479c255859eaf39"
+  },
+  {
+    "path": "code/atomvla-semantic-data/production/split_pipeline.py",
+    "bytes": 3727,
+    "sha256": "59ecb26e25289b1882eedeb51575f17308ae67a3b6b74384700bcb7fa7491bda"
+  },
+  {
+    "path": "code/atomvla-semantic-data/production/task_schema.py",
+    "bytes": 3046,
+    "sha256": "8ce0544cadbab62418d05a2a1a3b179cb69c19f5528ebcbc6567778e3f137d24"
+  },
+  {
+    "path": "code/atomvla-semantic-data/production/test_auto_only_policy.py",
+    "bytes": 1417,
+    "sha256": "8e35c006b43f1813906980a9b1b662fad82f1b6aa8c46f253e513d2623295ade"
+  },
+  {
+    "path": "code/atomvla-semantic-data/production/test_candidate_policy.py",
+    "bytes": 1722,
+    "sha256": "e1bb7b3f9b1a702733a241328ee8d4dd4134e15c7dc3711b703cbb12faeadd31"
+  },
+  {
+    "path": "code/atomvla-semantic-data/production/test_complete_annotation.py",
+    "bytes": 1562,
+    "sha256": "34ef3d0c2f3308b72c711426f37cc73a9b25029756adf6dbfcf42661d71a9a49"
+  },
+  {
+    "path": "code/atomvla-semantic-data/production/test_deterministic_semantics.py",
+    "bytes": 2756,
+    "sha256": "1709150da8c2bfa96f3ffa29511878733802f51d4b5f64c56bec7ef7848a5287"
+  },
+  {
+    "path": "code/atomvla-semantic-data/production/test_event_grounding.py",
+    "bytes": 8159,
+    "sha256": "ad13d06af2524e76ad9cd880f8c1ba015b24e06c882e33a3b5c7a3958ffe8ba0"
+  },
+  {
+    "path": "code/atomvla-semantic-data/production/test_full_visual_release.py",
+    "bytes": 2495,
+    "sha256": "89e695bc627e01066b113aa2dda7a1ca95ab6a617cbd7796089a23d82861ffd8"
+  },
+  {
+    "path": "code/atomvla-semantic-data/production/test_preflight_large_scale.py",
+    "bytes": 1439,
+    "sha256": "42fafba512a65c7b0b9a7f4a296ac1242684a99c6d8190dd1b4d57576cd3037e"
+  },
+  {
+    "path": "code/atomvla-semantic-data/production/test_production.py",
+    "bytes": 3574,
+    "sha256": "67df38871419c2474eb403180bbfa589af9678fe109d3fb16ce29d29226d6476"
+  },
+  {
+    "path": "code/atomvla-semantic-data/production/test_replay_semantic_audit.py",
+    "bytes": 2135,
+    "sha256": "a8da93b5698287736d7e1c8bdef7e0714b9052c6350c4780374f9104794e9f68"
+  },
+  {
+    "path": "code/atomvla-semantic-data/production/test_source_events.py",
+    "bytes": 898,
+    "sha256": "4c897b889c0971b00447c8942d535ceb438b76391c2d2160a033c33b7e4ef6b9"
+  },
+  {
+    "path": "code/atomvla-semantic-data/production/test_visual_annotation.py",
+    "bytes": 3749,
+    "sha256": "afb5052896b3d1d767bc622f36fa62c9ad1218e7667cf7491577424fb55386fb"
+  },
+  {
+    "path": "code/atomvla-semantic-data/production/trajectory_events.py",
+    "bytes": 4932,
+    "sha256": "b373138fd27360667ef1f2faf361ede5690d95341d8c52d6f96caabe0d4aca03"
+  },
+  {
+    "path": "code/atomvla-semantic-data/production/visual_annotation.py",
+    "bytes": 10556,
+    "sha256": "91328c8f009f5bc7cfba06747c583d9eef73b16ee77a6c291fa5e07d9aab11fd"
+  },
+  {
+    "path": "code/atomvla-semantic-data/production/worker.py",
+    "bytes": 1608,
+    "sha256": "fe2d1604c2374fa30d6882f05be99695bc0ce3b20e6fc257ccba310af6e35597"
+  },
+  {
+    "path": "code/atomvla-semantic-data/semantic_records.py",
+    "bytes": 8997,
+    "sha256": "6d2b28bd962e38b9c62672470da6a051d96913954ca44fe2224f96f88b21b719"
+  },
+  {
+    "path": "code/atomvla-semantic-data/test_semantic_records.py",
+    "bytes": 4122,
+    "sha256": "ebfd1a6c9c04db1c01b90be0166af2379e0bb475771b4a2d3c464a336b7644c9"
+  },
+  {
+    "path": "code/atomvla-semantic-data/training/README.md",
+    "bytes": 2603,
+    "sha256": "daedf37c64614ae4861c4866c1a5b204c96653da1ba4a45b8b21dbea4c9bd0ad"
+  },
+  {
+    "path": "code/atomvla-semantic-data/training/smoke.py",
+    "bytes": 9375,
+    "sha256": "5eab183669640ed162b61cb8a83366f28be4f66bc8a8bc262fef65437749d93d"
+  },
+  {
+    "path": "code/atomvla-semantic-data/training/stage1.py",
+    "bytes": 5160,
+    "sha256": "a2411d159356a15d8ab6c6848d5c41a683fc961eda3719d4c410636e20759d84"
+  },
+  {
+    "path": "configs/development.json",
+    "bytes": 1681,
+    "sha256": "b92237ab14c26b4a6256e69b13acb6f5423cb9aaafbf7393991a2df38e9ba54a"
+  },
+  {
+    "path": "configs/main.json",
+    "bytes": 1691,
+    "sha256": "9376780beb9034f8ccd1fabecff407fa8ed77fdae051461230bc3e2a99696faf"
+  },
+  {
+    "path": "docs/REPRODUCE.md",
+    "bytes": 3981,
+    "sha256": "1b63cb347790cd7bf3704d56522aee7331180382507e09b066f66ddacbac4155"
+  },
+  {
+    "path": "docs/STATUS.md",
+    "bytes": 2625,
+    "sha256": "fb7e27643e29d5806c16022f89d5c2ccb4df053a5f1d254154da62f20513c395"
+  },
+  {
+    "path": "docs/VALIDATION.md",
+    "bytes": 888,
+    "sha256": "8c9556c445c19543387cdcb424040a1b04a37cdf4fc1c6ba759c094bece902af"
+  },
+  {
+    "path": "paper/README.md",
+    "bytes": 622,
+    "sha256": "091ee2e2a88e060748d52c42ad9a012ddd48cbd286909adecf1c51231e29729f"
+  },
+  {
+    "path": "paper/atomvla_annotation_pipeline.pdf",
+    "bytes": 1306857,
+    "sha256": "231c5238586269d282aa7cbeb96ca2d903d702059a16245003d086575069eff4"
+  },
+  {
+    "path": "paper/atomvla_framework.pdf",
+    "bytes": 490101,
+    "sha256": "a748925efe69d9c728b1592108719a91585b9592a4aa5af278bef65e7bfc8065"
+  },
+  {
+    "path": "paper/cvpr.sty",
+    "bytes": 17883,
+    "sha256": "ae8e51adc7270b118833b2092310ca1151a19fab0c09b1ab35a485ac4004ac0f"
+  },
+  {
+    "path": "paper/editable/AtomVLA_dataset_pipeline.pptx",
+    "bytes": 3173513,
+    "sha256": "79aab68dec2f8b977ac747fc225b07df5d500ccb6eeab6a8beaf42aad04ecbb7"
+  },
+  {
+    "path": "paper/editable/AtomVLA_method_pipeline.pptx",
+    "bytes": 477535,
+    "sha256": "f6c443478b088928dc659f93ea3ffe841e9c078b4e15c11ca3cec6d4f225b78f"
+  },
+  {
+    "path": "paper/expected_feature_comparison.pdf",
+    "bytes": 1051445,
+    "sha256": "3b6da2c28a53577f622aaed090eecdf7feb7fdf66553d4330e841bd5e7d4a817"
+  },
+  {
+    "path": "paper/figures/pipeline/README.md",
+    "bytes": 699,
+    "sha256": "7ee8ec854be7c86a4f3e608001d746041efb135f56ea047d9da7bb5e62b76a94"
+  },
+  {
+    "path": "paper/figures/pipeline/build.mjs",
+    "bytes": 15640,
+    "sha256": "ab273eee6be4af19e19ff38401e71a6be9377f2b5204b7894d85bae4d5934b27"
+  },
+  {
+    "path": "paper/figures/plot_expected_features.py",
+    "bytes": 4513,
+    "sha256": "9398f76bec938b3d269db08e67958fb128d4dff95dc2dba4e41378d773637229"
+  },
+  {
+    "path": "paper/ieeenat_fullname.bst",
+    "bytes": 26900,
+    "sha256": "e38e6166bd7b1e6d23a1b79dcdb55c656e4fcdbe91bdf6b50d827e6b5d1aacfc"
+  },
+  {
+    "path": "paper/main.bib",
+    "bytes": 10634,
+    "sha256": "9631124ac14225830b0056936c7c274996e6493a7eba90eb42826e425ff721db"
+  },
+  {
+    "path": "paper/main.tex",
+    "bytes": 3212,
+    "sha256": "73eae2ac8cce853fd02cbf3c8d7fde9a44a33e8f9f50d9ff1c794548fa7f0241"
+  },
+  {
+    "path": "paper/preamble.tex",
+    "bytes": 1046,
+    "sha256": "e5981812a3bab6eed52e88b5444e2737c16f3e6152d0cbe8b66e2a5bd485e1e5"
+  },
+  {
+    "path": "paper/sec/1_intro.tex",
+    "bytes": 8929,
+    "sha256": "0e8371e9019485cfd35a4577518b0bb17ee90d48db5232565912b88d71e2d4da"
+  },
+  {
+    "path": "paper/sec/2_related.tex",
+    "bytes": 3053,
+    "sha256": "248348a3c3bd2d6b4049d6eac87fd3f9efb3f212589bb9841a8a49bd8d3518ff"
+  },
+  {
+    "path": "paper/sec/3_method.tex",
+    "bytes": 8426,
+    "sha256": "d0f01619ff05599069e258673674a2433f8cf202428c05b522a29f2ea317d3c6"
+  },
+  {
+    "path": "paper/sec/4_experiments.tex",
+    "bytes": 15600,
+    "sha256": "6a7c58989c4b6efb3101ead12ebe90d7284cd90f8691b617f1dd9c537971b5af"
+  },
+  {
+    "path": "paper/sec/5_discussion.tex",
+    "bytes": 927,
+    "sha256": "abd3524d62d58ef2636e61a2e30b4195db48fa7f9461ee0c17c2e99fff29af8c"
+  },
+  {
+    "path": "paper/sec/6_appendix.tex",
+    "bytes": 37068,
+    "sha256": "f9b1e420cb7351a6261d5c7e73e9e991cab900bd7b779372e51528eee3f7a8d7"
+  },
+  {
+    "path": "requirements-test.txt",
+    "bytes": 80,
+    "sha256": "9aa8408f01bc63587e7260e039c26da5c3b3e059478198091f0b423619616b76"
+  },
+  {
+    "path": "requirements-train.txt",
+    "bytes": 212,
+    "sha256": "e5d8205ab72dc6f923fd72f1643f1c5d6599c8cd5aec3bf647dd7acac0e56a3f"
+  },
+  {
+    "path": "scripts/check_release.py",
+    "bytes": 1929,
+    "sha256": "77e78a89877546fd0f537bb3f730bd8c101800c96e768cd9820bdabea583c602"
+  },
+  {
+    "path": "training/build_benchmark_index.py",
+    "bytes": 4407,
+    "sha256": "606d26a61682d3a69016ceefd859de97cc56363500d8594e7251a44a4a7255f5"
+  },
+  {
+    "path": "training/build_training_index.py",
+    "bytes": 346,
+    "sha256": "bcc6bdd9e6eb5adee46aa61fbca1086c7150905ca08420da55e2bf5d1955b3b6"
+  },
+  {
+    "path": "training/expand_dataset.py",
+    "bytes": 20558,
+    "sha256": "c740fe0b4c89a28d82a0072db18d827398173788ec7ce8a9213b8caaec6c7283"
+  },
+  {
+    "path": "training/full_audit.py",
+    "bytes": 8632,
+    "sha256": "c05c8a014b03f7ce6aa4e365b243b3cb01d69d5ac84d2cf704fdef5099cd9ed6"
+  },
+  {
+    "path": "training/full_common.py",
+    "bytes": 6892,
+    "sha256": "5ddbf26abe5ba516f83d98ca1ea7e4c0c541dbccd852630ef5ffedf118db6075"
+  },
+  {
+    "path": "training/full_dataset.py",
+    "bytes": 5524,
+    "sha256": "208168089a17b478ed243e3e1b838303ed6a3cf88e73363d09f829d64bdcb7d0"
+  },
+  {
+    "path": "training/full_export_catalog.py",
+    "bytes": 8115,
+    "sha256": "2f48dafca290d6b9f856676fec2ab71e56e854845a72c5ad9e0cda685634dccf"
+  },
+  {
+    "path": "training/full_ft/README.md",
+    "bytes": 10212,
+    "sha256": "b2cfe7d8c0c03ceb61eec9c41bec2e5aeb727b0db96a2af7f0f2afc1966cdfec"
+  },
+  {
+    "path": "training/full_ft/__init__.py",
+    "bytes": 85,
+    "sha256": "a31fb9ed352801e5e78bbd448073c91cb7526d4789e5d3e9914be4985c9569d2"
+  },
+  {
+    "path": "training/full_ft/checks.py",
+    "bytes": 6135,
+    "sha256": "07d29959bda378e8b05341cfcc62d45433ff7113c80c58278aec508b46312d4e"
+  },
+  {
+    "path": "training/full_ft/collator_checks.py",
+    "bytes": 1634,
+    "sha256": "0d65828d6d52da7e93c5919ce022f6b46fbcb63b8519ead9dfa7cccf5f413722"
+  },
+  {
+    "path": "training/full_ft/data.py",
+    "bytes": 17093,
+    "sha256": "b6a7460619e74003592ec14164f26c7b4c527b70d5530f34096f0bb845aec25d"
+  },
+  {
+    "path": "training/full_ft/ddp_checks.py",
+    "bytes": 2424,
+    "sha256": "057829752b26d8e01d61fb79bf18cf74f1d62a10132f4c75e4877becf374a5fc"
+  },
+  {
+    "path": "training/full_ft/integration_checks.py",
+    "bytes": 7203,
+    "sha256": "03302660ff7ef18f926316dd2cd9d9b2655a6068e3214e1f64eb3ca4b42d22a4"
+  },
+  {
+    "path": "training/full_ft/model.py",
+    "bytes": 15803,
+    "sha256": "ae32d9d79dc9b99fe344b45ead951571d05f292ee9d190fcc4e234891b73ebef"
+  },
+  {
+    "path": "training/full_ft/runtime.py",
+    "bytes": 5428,
+    "sha256": "951b6b6c824690284af7799c4bd2948630ea056d4f55de52952d74fb0285dcd2"
+  },
+  {
+    "path": "training/full_ft/schedule.py",
+    "bytes": 1234,
+    "sha256": "6bee0ba77771bc08df1dbf06b4665ec206c1337f3b263869e8d683476de137aa"
+  },
+  {
+    "path": "training/full_ft/size_plan.py",
+    "bytes": 1116,
+    "sha256": "3c18fa0f46bf342ef2aba460c6994418657959e79e90c371f62faee615442a15"
+  },
+  {
+    "path": "training/full_hf_download.py",
+    "bytes": 2636,
+    "sha256": "dc617c041af17a22404015c1dfcdf5c74570487a2d5257371250c3d7ac7dcb72"
+  },
+  {
+    "path": "training/full_lerobot.py",
+    "bytes": 9763,
+    "sha256": "25dff0d209329cbbe1c253ed3ec25f63cd5fe6b72bc747748413a85fa0c8fe28"
+  },
+  {
+    "path": "training/full_normalization.py",
+    "bytes": 2453,
+    "sha256": "723f90bfb462c0535369feae66224caf5f0bab2a4b503be2b4bedde8a7a0a7f6"
+  },
+  {
+    "path": "training/full_simulation.py",
+    "bytes": 13587,
+    "sha256": "1de2a22d4edea2a3ed54430a9c86bd7b3c056d4a66381ec0e2ebb120eadba190"
+  },
+  {
+    "path": "training/prepare_benchmark_config.py",
+    "bytes": 2325,
+    "sha256": "fdfc6fb7b5ed28d2232dbff342256ceee116d3427b91dc0072c3d66de9bbf6af"
+  },
+  {
+    "path": "training/prepare_data.py",
+    "bytes": 17488,
+    "sha256": "3bbbd0ffd444888dae6062897e123af673ca786560e81e793e416016348f0eb5"
+  },
+  {
+    "path": "training/repair_robotwin_demo_schema.py",
+    "bytes": 4743,
+    "sha256": "951ae8a1a4eaba211552379da4f29b84a7586edda7da4a2f6fb2e04687cf3e90"
+  },
+  {
+    "path": "training/train_full.py",
+    "bytes": 19710,
+    "sha256": "eec5b86516bad117b9b77e71421f1752bcc80c86b35af5de1221e425246b236c"
+  },
+  {
+    "path": "training/vendor_delta/LICENSE",
+    "bytes": 11357,
+    "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+  },
+  {
+    "path": "training/vendor_delta/SOURCE.json",
+    "bytes": 627,
+    "sha256": "f3be0f1623f6953472172c42cee9a277a1db37808c94481d44db81734a5b7108"
+  },
+  {
+    "path": "training/vendor_delta/__init__.py",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "training/vendor_delta/difference_query.py",
+    "bytes": 22044,
+    "sha256": "399a638c97914b32c84d488004227f7b9fe31abf1363bc0ce9ca182f0fd7fde2"
+  },
+  {
+    "path": "training/vendor_delta/optical_flow_aux_head.py",
+    "bytes": 3451,
+    "sha256": "74b5856e5d269b321840829bbdefac56ad5b886d7894cf63d2e2308011567ea1"
+  },
+  {
+    "path": "training/vendor_delta/optical_flow_loss.py",
+    "bytes": 3874,
+    "sha256": "50c601618288e791692b0e5fffd10672390c5473776c4d7b886d0cd6107b2466"
+  },
+  {
+    "path": "training/vendor_delta/qwen_vl_backbone.py",
+    "bytes": 19917,
+    "sha256": "0c24c374e65d5f677c860b5431bd2921df29db24895f29bfd93349b13066ab80"
+  },
+  {
+    "path": "training/watchdog.py",
+    "bytes": 3394,
+    "sha256": "8ec2989583e02faf395b16e4e90de6efca960d9ecd6b527763c2498b235d3ba8"
+  }
+]

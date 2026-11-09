@@ -1,0 +1,3 @@
+# Historical pipeline figure builder
+
+`build.mjs` is the authored slide-editing script. It depends on the external `@oai/artifact-tool` JavaScript runtime and source assets that are not distributed in this repository. Set `DATASET_TEMPLATE_PPTX` and `METHOD_TEMPLATE_PPTX` to appropriately licensed reference slide decks. The original workflow also requires layout exports (`ref1_slide2_layout.json`, `ref2_slide2_layout.json`), `trace.json` and demonstration frames in `episode/`. These data and reference decks are not included. The finished editable slides are provided in `paper/editable/`; this script is preserved as source provenance, not advertised as a standalone reproducible figure tool.

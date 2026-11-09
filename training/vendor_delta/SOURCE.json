@@ -1,0 +1,11 @@
+{
+  "repository": "https://github.com/ZJU-OmniAI/VLA-Delta",
+  "commit": "6b54a95580729bca1726d9c3fdfebf7727435729",
+  "files": {
+    "model/difference_query.py": "399a638c97914b32c84d488004227f7b9fe31abf1363bc0ce9ca182f0fd7fde2",
+    "model/qwen_vl_backbone.py": "0c24c374e65d5f677c860b5431bd2921df29db24895f29bfd93349b13066ab80",
+    "model/optical_flow_aux_head.py": "74b5856e5d269b321840829bbdefac56ad5b886d7894cf63d2e2308011567ea1",
+    "utils/optical_flow_loss.py": "50c601618288e791692b0e5fffd10672390c5473776c4d7b886d0cd6107b2466",
+    "LICENSE": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+  }
+}

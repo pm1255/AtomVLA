@@ -1,0 +1,36 @@
+{
+  "version": "atomvla_sources_20261104_v2",
+  "included": [
+    "droid",
+    "libero",
+    "robotwin"
+  ],
+  "excluded": [
+    "geniesim"
+  ],
+  "preserve_excluded_raw_files": true,
+  "label_policy": "automatic_event_labels_with_explicit_evidence_and_native_action_contracts",
+  "full_joint_training_ready": false,
+  "require_full_episode_annotation": true,
+  "partial_candidate_release_is_final_training_release": false,
+  "required_vocabulary": [
+    "approach",
+    "move",
+    "pick",
+    "place",
+    "flip",
+    "rotate",
+    "toggle",
+    "open",
+    "close",
+    "push",
+    "pull",
+    "insert",
+    "press",
+    "click",
+    "strike",
+    "handover"
+  ],
+  "unresolved_intervals": "retain_in_review_queue_never_drop_or_invent_labels",
+  "completion_policy": "full_per_arm_temporal_coverage_and_verified_semantic_binding"
+}

@@ -1,0 +1,71 @@
+{
+  "finetuning": "full",
+  "use_lora": false,
+  "base_model": "/opt/models/Qwen3-VL-2B-Instruct",
+  "data_root": "/opt/atomvla/data",
+  "index_root": "/opt/atomvla/data/training_index_v1",
+  "tensorboard_root": "runs/tensorboard",
+  "seed": 20261031,
+  "world_size": 1,
+  "microbatch": 1,
+  "accumulation": 32,
+  "loader_workers": 2,
+  "loader_timeout_seconds": 180,
+  "cpu_threads_per_rank": 2,
+  "distributed_timeout_seconds": 900,
+  "wall_seconds": 172800,
+  "idle_seconds": 1800,
+  "weight_decay": 0.01,
+  "clip_norm": 1.0,
+  "stage1_query_dropout": 0.2,
+  "stage2_pose_loss_dropout": 0.5,
+  "minimum_canonical_train_episodes": 8000,
+  "minimum_action_train_episodes": 6000,
+  "architecture": {
+    "queries": 32,
+    "horizon": 8,
+    "expert_hidden": 512,
+    "expert_layers": 8,
+    "expert_heads": 8,
+    "gradient_checkpointing": true,
+    "sampling_steps": 10,
+    "pixel_views": 3,
+    "pixel_hidden": 256,
+    "pixel_layers": 2,
+    "pixel_heads": 8,
+    "pixel_grid_size": 14,
+    "pixel_output_size": 56
+  },
+  "stages": {
+    "1": {
+      "steps": 2000,
+      "warmup": 100,
+      "vlm_lr": 1e-05,
+      "new_lr": 0.0001,
+      "weights": {
+        "pose": 0.25,
+        "pixel": 1.0
+      },
+      "eval_every": 250,
+      "save_every": 500,
+      "coverage_every": 100,
+      "validation_samples": 128
+    },
+    "2": {
+      "steps": 2000,
+      "warmup": 100,
+      "vlm_lr": 5e-06,
+      "new_lr": 0.0001,
+      "weights": {
+        "pose": 0.1,
+        "pixel": 0.1
+      },
+      "eval_every": 250,
+      "save_every": 500,
+      "coverage_every": 100,
+      "validation_samples": 128
+    }
+  },
+  "keep_checkpoints": 3,
+  "stage2_pixel_loss_dropout": 0.5
+}

@@ -1,0 +1,6 @@
+numpy
+scipy
+tensorboardX
+tensorboard
+# LIBERO and its compatible robosuite/MuJoCo environment must already be installed.
+# Use the original LIBERO-PRO runtime for exact saved XML/state reproduction.

@@ -1,0 +1,36 @@
+\documentclass[10pt,twocolumn,letterpaper]{article}
+\usepackage[review]{cvpr}
+\input{preamble}
+\definecolor{cvprblue}{rgb}{0.21,0.49,0.74}
+\usepackage[pagebackref,breaklinks,colorlinks,allcolors=cvprblue]{hyperref}
+\def\confName{CVPR}
+\def\confYear{2027}
+
+\title{AtomVLA: Atomic Programs as a Bridge between Semantics, Future State, and Action}
+\author{Anonymous CVPR submission}
+
+\begin{document}
+\maketitle
+\nolinenumbers
+
+\begin{abstract}
+Generalization and long-horizon manipulation remain challenging for embodied policies. Scaling pretraining and robot demonstrations expands behavioral coverage, but does not explicitly expose which physical operations can be shared across tasks. We investigate whether a reusable execution representation can reduce the need to relearn similar operations. We present \model{}, a vision-language-action framework built around typed atomic programs. Each call specifies an operation, object and target references, parameter slots, and a completion contract, separating reusable operation structure from execution details that must be grounded in the current scene. The text head generates the atomic name and string-valued arguments, while a program-conditioned action Query supplies only the terminal end-effector position and orientation. A future-imagination expert replaces an explicitly generated procedural body with an ordered sequence of intermediate and terminal visual predictions. An action expert uses these visual tokens, the Query, and robot state within concatenated mixture-of-transformers streams to generate continuous control. A code-data pipeline aligns discrete calls, terminal poses, future-image sequences, and demonstrated actions. We formulate matched evaluations of data efficiency, cross-context reuse, long-horizon composition, and physical execution, with component and feedback controls to test the proposed mechanisms. This proposal includes explicitly labeled planning estimates and synthetic feature visualizations; empirical validation remains pending.
+\end{abstract}
+
+\input{sec/1_intro}
+\input{sec/2_related}
+\input{sec/3_method}
+\input{sec/4_experiments}
+\input{sec/5_discussion}
+
+\clearpage
+\section*{LLM Usage Statement}
+OpenAI Codex (GPT-6) assisted with ideation and refinement of the proposed method and evaluation protocol, literature lookup, drafting and language editing across the manuscript and appendix, LaTeX/table preparation, and code for figure preparation and synthetic feature visualization. It also assisted in constructing the explicitly labeled hypothetical performance scenarios used in this proposal. Those estimates and generated features are not measured robot outcomes or representations extracted from a trained model. The proposed use of a VLM to produce discrete program calls is part of the research method described in Section~\ref{sec:method}, distinct from manuscript-preparation assistance. No completed training or robot evaluation is established by these tool-assisted scenarios. The authors retain responsibility for the final content, source verification, and empirical validation.
+
+{\small
+\bibliographystyle{ieeenat_fullname}
+\bibliography{main}
+}
+\clearpage
+\input{sec/6_appendix}
+\end{document}

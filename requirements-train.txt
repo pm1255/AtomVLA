@@ -1,0 +1,13 @@
+-r requirements-test.txt
+torch>=2.8,<3
+torchvision>=0.23
+transformers>=4.57,<5
+peft>=0.17
+accelerate>=1
+safetensors>=0.4
+av>=13
+pyarrow>=18
+huggingface-hub>=0.34
+imageio>=2.34
+imageio-ffmpeg>=0.5
+matplotlib>=3.9

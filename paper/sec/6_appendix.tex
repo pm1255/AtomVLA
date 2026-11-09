@@ -1,0 +1,197 @@
+\appendix
+\renewcommand{\theequation}{\Alph{section}\arabic{equation}}
+\section{Additional Context}
+\label{app:related}
+
+Diffusion Policy~\cite{diffpolicy} and Action Chunking with Transformers (ACT)~\cite{act} show that predicting short action sequences can capture multimodal, fine-grained manipulation. VIMA~\cite{vima} and multimodal prompting methods~\cite{saycan} expose richer task context, but they do not by themselves specify a reusable typed contract whose arguments are re-grounded at each primitive boundary. Our MoT expert follows the action-sequence view while receiving a program-conditioned Query prefix.
+
+\paragraph{Physical semantics.}
+Physical Words~\cite{physicalwords} argues that language-level physical words can organize latent reasoning and align semantic actions with future sensory dynamics. VLA-$\Delta$~\cite{vladelta} learns state-transition representations that connect current observations to physical change. LexiconVLA~\cite{lexiconvla} explores reusable atomic action codebooks. We adopt Physical Words' 16-label action vocabulary while changing the binding interface: the same typed program call conditions a completion-pose Query and the concatenated image/action MoT pathways, while continuous arguments are grounded from the current scene. We therefore evaluate behavior and transfer, rather than treating semantic clustering alone as evidence of a useful primitive.
+
+\paragraph{Program models.}
+Code as Policies~\cite{codeaspolicies} demonstrates that language-model programs can expose structured control APIs, while ProgPrompt~\cite{progprompt} and SayCan~\cite{saycan} use language models to organize situated task plans. Agentic World Action Models (AW-0)~\cite{aw0} jointly model code, future video, and actions, making explicit program structure a natural interface for reusable behavior and predictive grounding. \model{} addresses a narrower but complementary question: how can one atomic program call bind future visual and geometric information to a continuous VLA controller when the same verb has different parameters in different tasks? Our code-data pipeline provides the aligned supervision, and Query tokens supply pose-grounded geometry while the image and action experts model complementary outputs.
+
+\paragraph{Hierarchical reasoning.}
+Language hierarchies~\cite{rth}, embodied chain-of-thought~\cite{ecot}, future visual goals~\cite{cotvla}, and inner-monologue style feedback~\cite{inner} provide useful abstractions for long-horizon manipulation. They do not by themselves define a typed, reusable execution contract for an atomic operation. We compare against equal-information language and program controls so that any observed effect can be attributed to the structured interface rather than to additional words or parameters.
+
+\paragraph{Robot data engines.}
+RoboMimic~\cite{robomimic}, MimicGen~\cite{mimicgen}, and Open X-Embodiment~\cite{oxembodiment} emphasize standardized demonstrations, scalable relabeling, and cross-task or cross-embodiment reuse. Our code-data pipeline specializes this data-engineering perspective to primitive intervals: each interval carries a typed call, an ordered future-image sequence, completion-time end-effector pose, and the action chunk used by the controller.
+
+\section{Method Details}
+\setcounter{equation}{0}
+\subsection{Vocabulary and Contracts}
+\label{app:vocabulary}
+The 16 labels are approach, move, pick, place, flip, rotate, toggle, open, close, push, pull, insert, press, click, strike, and handover. They follow the movement/manipulation taxonomy of Physical Words~\cite{physicalwords}.
+The model interface differs: Physical Words supervises contextual hidden states with future visual and optional tactile latents, whereas our typed calls add references, argument schemas, completion contracts, and pose-grounded Query conditioning. We do not instantiate tactile label variants in this vision-based proposal.
+
+At this semantic granularity, the \texttt{grasp} and \texttt{lift} phases are execution stages within \texttt{pick}; \texttt{transport} maps to \texttt{move}, and \texttt{release} is part of the relevant placement contract. Alignment is an argument or execution condition for pose-sensitive calls rather than a separate top-level label. This choice keeps the semantic granularity consistent. For example,
+\begin{minipage}{\columnwidth}
+\begin{lstlisting}
+pick(object="red_cup", arm="left",
+     contact_region="handle",
+     terminate="held_and_clear")
+\end{lstlisting}
+\end{minipage}
+uses a scene-specific binding under a reusable schema. \texttt{Pick} completes when the object is held and clear of its support; \texttt{place} requires stable target support and release. \texttt{Handover} requires the receiving arm to hold the object and the donor to release it. \texttt{Open}/\texttt{close} refer to changing an object's articulated state, not simply opening or closing the robot gripper. Other labels require task-specific schemas and observable completion conditions before use. Atomicity here is relative to a declared physical outcome, not a claim that each call contains only one motor phase.
+
+The vocabulary is broader than any individual task. The three selected RoboTwin tasks mainly exercise approach, move, pick, place, and handover. We will report which labels are actually annotated in each benchmark, their counts, and their coverage; adopting 16 labels does not imply that all are present in those tasks. The synthetic visualization uses the full label set only to illustrate the planned representation comparison.
+\subsection{Annotation Quality}
+\label{app:annotation}
+The metadata $\mu_i$ records primitive boundaries, arm and camera masks, timestamps, coordinate frames, and annotation quality. In bimanual primitives, both arm poses are aligned to the same event; unavailable or irrelevant arm targets are masked. Action chunks crossing a primitive boundary are truncated and masked or excluded. Failed segments without a verified completion event do not receive an invented successful endpoint label.
+
+Train/test splits are made at the trajectory and task-context level before sampling windows, preventing adjacent frames from crossing splits. Future image sequences and terminal poses are supervision only. The text head generates only string-valued arguments. Continuous terminal position and orientation are predicted by Query and never serialized as ground-truth numeric tokens in text inputs. We record this distinction when constructing program labels. Camera/state synchronization and frame transforms are audited before training, and unavailable targets contribute no loss. No optical-flow annotation is required.
+\paragraph{Event-conditioned imagination targets.}
+The number and meaning of target frames depend on the primitive's event schema and the remaining observed phase. A \texttt{pick} example contains pregrasp, closure, and lift; a simple \texttt{move} contains arrival. A \texttt{place} schema can contain pre-placement, support contact, and release. These are within-call roles, not additional top-level program calls. More complex motion requires an explicit reviewed schema for relevant contact or obstacle events. We do not fill missing events with uniformly spaced frames or infer grasp success from gripper closure alone. Simulator predicates, object tracks, contact signals, or reviewed visual annotations provide event evidence and provenance. VLM proposals and motion-based boundaries require semantic validation before acceptance.
+
+For a remaining interval $(t,c(t)]$, retain only verified future events, with the final event at completion. Store each role, timestamp, image reference, camera mask, and evidence source. The resulting length $K_i$ varies across primitives and within an executing primitive. Batch padding receives zero attention and loss validity; repeated padding is not evidence. Camera synchronization uses timestamp tolerances rather than assuming identical raw camera indices. Failed or ambiguous intervals are excluded from successful targets or separately labeled as failures. Terminal geometry remains one completion pose per active arm; intermediate poses are not Query targets.
+
+Training event times are labels only. Deployment selects remaining event roles from the discrete call schema and a phase estimate based on current observations and observed history. Ground-truth future times, event detections, images, and completion poses cannot determine inference inputs. Phase-estimation errors and uncertainty require evaluation; a missed event must not silently be treated as completed. Ordered role embeddings specify what to imagine without prescribing uniform frame spacing or a shared fixed number of frames. Image and action experts jointly denoise with valid-event and camera masks.
+
+\paragraph{Implementation status.}
+The proposed interface requires versioned semantic records. The audited legacy converter uses motion partitions, numeric pose values in text, eight intermediate pose targets, and fixed-horizon image pairs with optical-flow supervision. These records and checkpoints do not implement the present method. The new local reference converter validates reviewed calls and event annotations, separates terminal geometry, and masks actions at primitive boundaries; automatic semantic labeling, full vocabulary coverage, image decoding, causal phase estimation, and the joint RGB/action training integration remain to be completed and validated before a dataset rebuild.
+
+\subsection{Losses and Masking}
+\label{app:losses}
+The pose head maps $Q_t$ to a completion position and rotation for each valid arm. Predicted rotations use a continuous representation mapped to $SO(3)$ before computing angular error. For validity mask $m_t^b$, we define
+\begin{align}
+\ell_p^{t,b}&=\operatorname{smoothL1}
+\left((\widehat p_t^{F,b}-p_t^{F,b})/s_p\right),\\
+\ell_R^{t,b}&=\operatorname{ang}(\widehat R_t^{F,b},R_t^{F,b}),\\
+\mathcal L_{\rm pose}&=
+\frac{\sum_{t,b}m_t^b(\ell_p^{t,b}+\lambda_R\ell_R^{t,b})}
+{\max(1,\sum_{t,b}m_t^b)}.
+\label{eq:pose}
+\end{align}
+Here $\operatorname{ang}$ is the geodesic rotation error:
+\begin{equation}
+\begin{aligned}
+c(R_1,R_2)&=(\operatorname{tr}(R_1^\top R_2)-1)/2,\\
+\operatorname{ang}(R_1,R_2)&=\arccos(\operatorname{clip}(c(R_1,R_2),-1,1)).
+\end{aligned}
+\end{equation}
+The position scale $s_p$ and rotation weight $\lambda_R$ are fixed using training/validation data; numerical clipping is used for stable rotation computation. Unlike a displacement direction, a stationary but valid endpoint pose remains a meaningful target.
+
+Pose supervision grounds the Query in the physical outcome of the active call. The downstream experts consume both Query tokens and an embedding of the decoded terminal pose. The latter explicitly binds imagined evolution to the continuous parameters, while latent tokens retain current-scene context. A completion pose does not uniquely determine a collision-free path, contact state, or timing, and its accuracy alone cannot certify task success. The future-imagination sequence supplies intermediate visual context, while the action expert realizes dense motion and observed completion checks determine success. Although pose is the Query's only explicit geometric prediction target, downstream image and action losses may also update the shared representation during joint training.
+
+\paragraph{MoT generation.}
+The text head learns all discrete call tokens by teacher-forced cross-entropy, denoted $\mathcal L_{\rm txt}$, with schema masks for optional string fields. There is no text-head continuous-argument regression loss and no function-body token loss. Query alone supplies the terminal pose parameters.
+
+Image and action generation use Eq.~\ref{eq:motconcat}. The image variable is the entire ordered sequence $\mathcal I_t^F$, with event-role, order, and camera embeddings. The image expert predicts within-primitive evolution, while the action expert attends to the evolving visual tokens and shared context. Context tokens cannot attend to future-target tokens. Image and action experts attend to context and each other's noisy tokens under a joint-generation mask. This is joint denoising, not teacher-forced conditioning on clean ground-truth future images. Deployment uses the same predicted terminal-pose conditioning and jointly sampled image/action streams.
+
+For a flow-matching formulation, let $Y_\sigma=(1-\sigma)\epsilon_Y+\sigma Y$, where $Y\in\{\mathcal I_t^F,A_t\}$, $\epsilon_Y$ is sampled noise, and $\sigma\in[0,1]$. The expert losses are
+\begin{align}
+\mathcal L_{\rm seq}&=\mathbb E\|v_{\rm img}(Z_\sigma,\sigma)-(\mathcal I_t^F-\epsilon_I)\|^2,\\
+\mathcal L_{\rm act}&=\mathbb E\|v_{\rm act}(Z_\sigma,\sigma)-(A_t-\epsilon_A)\|^2,
+\label{eq:action}
+\end{align}
+with camera, temporal, and action-dimension validity masks. Image resolution, tokenization, and sampling schedules are specified with the implementation. Both outputs are conditioned on predicted Query tokens; ground-truth completion poses are not substituted for Query at inference. The imagined sequence represents sparse visual evolution, not a sequence of motor commands. The action expert generates the dense trajectory, including rotations between visual stages, timing, contact adjustments, and gripper actuation. Joint generation retains the image-token stream even when its output is not displayed; removing it is a distinct ablation whose compute cost is reported.
+\paragraph{Joint optimization.}
+The joint objective is
+\begin{equation}
+\mathcal L=\mathcal L_{\rm txt}+\lambda_{\rm pose}\mathcal L_{\rm pose}
++\lambda_{\rm rgb}\mathcal L_{\rm seq}+\lambda_{\rm act}\mathcal L_{\rm act}.
+\label{eq:total}
+\end{equation}
+Loss weights, masks, and target conventions are selected on training/validation data and fixed before testing. At inference, the model predicts the active call, Query, and action chunk from current inputs, executes a short action prefix, and observes again. If the completion contract holds, the planner advances to the next call. Otherwise, it may continue or re-ground the current call and regenerate its predictions.
+
+The predicted completion pose also defines a candidate feedback interface. Pose discrepancy is evaluated at a matched completion or declared attempt-termination event, together with observed contract status (Sec.~\ref{sec:coupling}). A distance to the endpoint during an unfinished motion is a progress measure, not automatically an execution error. MoT flow velocity likewise is not a calibrated residual. Cross-primitive memory is evaluated as a separate extension in Sec.~\ref{sec:memory}; the base Query predicts the current primitive's future pose rather than serving as an unrestricted history store.
+
+\subsection{Training Schedule}
+\label{app:training}
+These are proposed training defaults to be fixed before runs. The warm-up uses 10\% of the total optimization updates to train the program head, Query tokens, and pose head while keeping pretrained backbones fixed. The remaining 90\% jointly optimizes these modules, the image/action MoT experts, and the selected VLM adapters. Both phases use training trajectories only; validation sets select loss weights and checkpoint stopping rules. The total update count, batch size, backbone checkpoints, adapter configuration, and learning rates are held identical across relevant controls and reported with the eventual runs.
+
+During warm-up, Query conditioning uses annotated discrete calls and learns only terminal geometry. During joint training, half of the conditioning calls are annotated and half are grammar-valid calls decoded from current observations, instruction, and state. Program cross-entropy remains supervised by the annotated call in both cases. Decoded programs are discrete: downstream gradients update shared features and embeddings, not the token-sampling operation. Clean future poses and images are never inserted as downstream conditioning inputs. Both experts always read predicted Query tokens and the predicted terminal-pose embedding, including during joint training. Pose and action coordinates use the same calibrated robot-base frame; camera, arm, temporal, and action-dimension masks remove unavailable targets from their respective losses. The schedule is a proposal rather than a record of completed optimization.
+
+\section{Evaluation Details}
+\setcounter{equation}{0}
+\label{app:experiments}
+\subsection{Scenarios and Protocols}
+The central scenario assumes successful data alignment, sufficient model capacity, and stable training, with reusable program structure and pose grounding improving transfer. Nominal LIBERO and unperturbed LIBERO-Pro estimates use a planning envelope of $\pm8$ percentage points; shifted/simulator task estimates use $\pm15$, and real-robot estimates use $\pm20$, clipped to $[0,100]$. Benchmark-average envelopes are computed from their constituent subset values. These are uncalibrated scenario ranges, not confidence or prediction intervals. Ranges overlap and rankings may reverse; a null-benefit outcome remains possible. Method citations identify architectures and do not substantiate the projected scores. The accompanying planning report records every central estimate and range.
+
+We report the checkpoint, trainable parameters, data split, primitive schemas, camera and action interfaces, action horizon, optimizer budget, and random seeds for every method. Failed and timed-out episodes remain in the denominator. We report task success together with primitive completion, argument error, retries, execution time, and inference cost. Correlated frames are not treated as independent samples; uncertainty is computed over episodes and task identities.
+
+The data pipeline is audited before model training. We record the number of valid primitive intervals, program vocabulary counts, per-frame future-RGB availability, terminal-pose availability, timestamp alignment failures, and held-out leakage checks. Examples without a valid completion target remain usable for program or action supervision only when the corresponding loss mask is zero. No optical-flow annotation is collected or used.
+
+Our planned LIBERO evaluation uses 10 tasks per suite and 50 episodes per task,
+with one policy covering all four suites. LIBERO-Pro uses 40 tasks and 50
+episodes per task and condition, covering the unperturbed reference and five
+perturbation subsets: object attributes, initial positions, semantic paraphrase
+of instructions, task-goal changes, and environment replacement. RoboTwin~2.0 uses 50 dual-arm tasks on Aloha-AgileX,
+50 demonstrations per task, and 100 evaluation episodes per task and setting
+(Clean/Easy and Random/Hard). These are the target settings for our runs. Any subset or interface deviation
+will be disclosed. RoboTwin evaluation of PhysWord and LexiconVLA is outside
+the current plan. Checkpoints, data budgets, action interfaces, and seeds follow
+the shared protocol.
+\paragraph{Decimal scenario values.}
+Projected central values receive reproducible signed perturbations of 0.1--0.9 percentage points around the previous planning scenario (seed 20261103). They are illustrative probabilities, not episode-count measurements. LIBERO-Pro averages are recomputed from their five subsets, and repeated Full AtomVLA rows are identical. Published Mem-0 values remain unchanged. These decimal places do not imply forecast precision.
+\subsection{Data Efficiency}
+To test the motivation directly, we additionally train matched policies using nested budgets of 10, 25, and 50 demonstrations per task, with identical demonstration identities across methods at each budget. We report success-versus-budget curves, uncertainty across training seeds, and the demonstrations needed to reach a predeclared success threshold within the observed range. Program/pose annotation cost is reported separately. A higher full-budget score alone does not establish data efficiency, and annotation expense is not treated as free. Held-out object/goal combinations test cross-context reuse; long-horizon performance is stratified by annotated primitive count and tested on held-out compositions of familiar primitives. Task difficulty and composition are reported alongside length to avoid attributing every longer-task failure to horizon alone.
+\subsection{Ablation Controls}
+\label{app:ablations}
+Full \model{} uses typed calls, the pose-grounded Query, and concatenated image/action MoT experts. No program removes the typed-call and Query pathway, so current VLM context directly conditions the action expert; image generation remains available from the shared context. No Query bypasses Query conditioning and its pose loss while retaining the discrete call and both experts; the decoded-pose embedding is also removed to avoid retaining a hidden Query pathway. No RGB generation removes the full future-imagination sequence and its objective while retaining terminal-pose and action supervision. Verb-only retains the operation label but removes object/target references and other string arguments. Query still predicts terminal pose, so this row isolates discrete argument conditioning rather than deleting continuous geometry. All rows retain current images, proprioception, action targets, and identical action horizons; capacity and compute differences are disclosed.
+
+We hypothesize that Full improves over no program, no Query, and verb-only under matched evaluation; the projected values illustrate that hypothesis and are not measurements. A small no-program gap would suggest limited benefit from the structured pathway in these tasks. Since that row jointly removes program and Query, an additional same-architecture control that masks only the program input is needed to isolate program semantics. The no-Query comparison tests the pose-grounding pathway as a whole; a separate pose-loss-off control is needed to distinguish its supervision from its token interface. A no-RGB score close to Full suggests limited benefit from joint image generation. A verb-only drop motivates separate tests of object/target and other string arguments; it does not directly measure the value of continuous pose parameters. Additional matched controls compare terminal-image-only imagination ($K=1$) with event-conditioned variable-length imagination, shuffle frame order, and mask visual-to-action attention while retaining RGB supervision. These distinguish intermediate evolution and its use by the action expert from auxiliary image training alone. Their results remain to be measured. The provisional literature references for $\pi_{0.5}$ of 18\% for Handover Block and approximately 49\% for Place Object Basket remain provisional until their source protocols are verified; they are used only as provisional anchors for the planner+$\pi_{0.5}$ scenario, not as verified measurements.
+\subsection{Memory Controls}
+\label{app:memory}
+The memory experiment now uses RoboMME~\cite{robomme}, rather than reusing the earlier RMBench three-task scenario. RoboMME Table~3 provides the four task groups and 16 columns in Table~\ref{tab:memory}. Counting contains BinFill, PickXtimes, SwingXtimes, and StopCube. Permanence contains VideoUnmask, ButtonUnmask, VideoUnmaskSwap, and ButtonUnmaskSwap. Reference contains PickHighlight, VideoRepick, VideoPlaceButton, and VideoPlaceOrder. Imitation contains MoveCube, InsertPeg, PatternLock, and RouteStick. The table uses the source's compact names Umsk (Unmask), UmskS (UnmaskSwap), HighL (Highlight), PlcBtn (PlaceButton), and PlcOrd (PlaceOrder). Each group average weights its four tasks equally; AVG weights all 16 tasks equally.
+
+The general-policy references are the $\pi_{0.5}$ and $\pi_{0.5}$ with past actions rows in Table~3 of RoboMME, arXiv:2603.04639v3 (26 May 2026). We retain all 16 task values, the source's decimal precision, and its reported averages (17.93\% and 19.73\%). They are literature results, not our reproductions. Specialized memory architectures are outside this comparison. No score from LIBERO, RoboTwin, or RMBench is transferred to RoboMME.
+
+The planned comparison includes a text-loss controller with the same visual backbone, action expert, demonstrations, optimization budget, and future-image supervision as AtomVLA. It substitutes natural-language subgoals for typed calls and does not use the program-conditioned terminal-pose Query. Both controllers receive the same causal history window and robot-state inputs, with the actual number of frames, tokens, past actions, and latency reported. This is an interface-level comparison; it does not isolate each component, which requires the separate ablations. It must not deprive the text baseline of cues needed to interpret an instruction or demonstration video.
+
+Use the official 16-task split with 50 held-out episodes per task (800 per run) and a 1,300-step horizon. The source's MME-VLA setup uses action chunks of 20, executes 16 steps, and budgets 512 memory tokens; its results average three checkpoints and three seeds, whereas the prior-method references use three runs. These settings describe the source, not a claim that every baseline shares an identical interface. For our own runs, match seeds, demonstrations, evaluation layouts, and available observation/history information, preserve method-specific action interfaces, and disclose differences. Reproduce the general-policy baselines under this matched setup before attributing their literature score gaps to AtomVLA.
+
+The AtomVLA memory variant maintains a fixed-budget recurrent state updated at primitive completion from program context, observed outcome, contract status, and the terminal-pose Query. This state is supplied to the next primitive. Memory is separate from Query's endpoint prediction and from future imagination; imagined future images are not observed history. No future ground truth or external retrieval database is available at inference. We report state size, update frequency, latency, and storage. Reset-memory, temporally shuffled-memory, and fixed-interval-update controls separate useful historical information from the choice of update boundaries.
+
+\paragraph{Planning values and interpretation.}
+The text-controller and AtomVLA rows are illustrative planning scenarios, not extrapolations from fitted models or completed runs. Their 16-task means are 41.51250\% and 61.3125\%, respectively; displayed averages are rounded to one decimal. The text-controller values are 43.7, 71.6, 63.8, 24.5, 53.2, 45.7, 32.4, 22.6, 42.9, 27.3, 49.8, 31.7, 65.4, 10.6, 36.2, 42.8. The AtomVLA values are 68.3, 91.7, 86.2, 36.8, 79.4, 67.6, 51.3, 34.9, 64.7, 45.8, 67.2, 49.6, 88.1, 18.7, 61.4, 69.3. Both scenarios retain difficulty differences across tasks. Use an uncalibrated $\pm15$-point planning envelope per task, clipped to $[0,100]$; it is not a confidence interval. The scenario cannot validate the design. Matched policy runs establish comparative performance; reset, shuffled-history, and fixed-interval updates separately test the proposed use of history.
+
+\subsection{Feedback Controls}
+The single VLM directly produces actions. Planner+$\pi_{0.5}$ supplies a high-level subgoal to a continuous controller, whose tested wrapper returns action chunks. The text-conditioned expert receives a text subgoal. \model{} receives typed program context and pose-grounded Query tokens alongside the image/action MoT streams. The latter two baselines are not assumed incapable of feedback; the comparison concerns the explicitly implemented interface. The provisional REA aggregate references (MEDex 80\%, VLA routing 84\%, VLA+code routing 86\%) remain source/protocol checks, not task scores for this table.
+
+\paragraph{Correction signal.}
+MoT flow velocity and training error are not calibrated execution residuals. We retain the pose head and compare a predicted completion pose with the observed end-effector pose at a matched completion or declared attempt-termination event. The prediction is frozen at a predeclared point in the attempt, so it cannot be replaced by a prediction made after observing the outcome. For arm $b$, the signal contains separate position and rotation errors:
+\begin{align}
+e_p^b&=\|\widehat p^{F,b}-p_{\mathrm{obs}}^b\|_2,\\
+e_R^b&=\operatorname{ang}(\widehat R^{F,b},R_{\mathrm{obs}}^b).
+\end{align}
+Observed contract status distinguishes reaching a pose from completing the physical operation. Timeouts and failed attempts remain failures even when pose error is small. Before the termination event, endpoint distance is only a progress cue; it is not labeled an execution residual without a time-aligned intermediate target. The planner may re-ground arguments or retry within a fixed intervention budget.
+
+\paragraph{Feedback tests.}
+For one trained checkpoint, compare feedback off, feedback on, and shuffled feedback. Where baseline interfaces permit, supply the same observation-based progress and contract checks and use their declared goal pose for comparable endpoint feedback. Record task success, recovery after detected failure, harmful interventions, retries, and latency. A recovery improvement for valid feedback over both off and shuffled controls would support useful feedback; an architecture ranking alone would not isolate that mechanism. No reproducible gain, or increased harmful interventions, would fail to support the proposed correction benefit.
+\subsection{Feature Analysis}
+The planning hypothesis is that typed semantics plus pose grounding improves within-action consistency across contexts, while preserving differences between actions. The two synthetic distributions are generated separately, with different class dispersion and contextual variation. In actual experiments, identical held-out samples will be extracted from the two trained variants and projected without tuning the display to a desired conclusion. We will check original-space within-class distances, cross-context retrieval, pose probes, and task success; compact clusters alone may reflect explicit verb labels rather than better physical control.
+The planning plot uses a fixed random seed, 16 semantic classes, and 400 points per class per panel. Its mixtures include anisotropy, variable density, curved tails, and partial class overlap. PCA is fitted jointly to both synthetic feature arrays. All generated features and plotting parameters are archived; none originate from a trained model.
+\subsection{Physical Evaluation}
+\label{app:realrobot}
+The five tasks differ from Handover Block, Place Object Basket, and Put Bottles Dustbin. The following dimensions, tolerances, and time budgets define a proposed evaluation protocol, not completed robot experiments. A dual-arm platform uses parallel grippers, calibrated external and wrist cameras where available, and current proprioception. Robot model, gripper geometry, control frequency, force limits, calibration residuals, and controller adapters must be recorded before data collection; they are not assumed identical across platforms. All pose ranges below are relative to a task-local nominal layout selected inside the common reachable workspace.
+
+\paragraph{Drawer stowing (120\,s).}
+Use a tabletop drawer unit with a handle accessible to one gripper, at least 12\,cm opening travel, and a non-sharp utensil initially outside the drawer. The support arm braces the cabinet; the manipulation arm grasps the handle, opens the drawer by at least 10\,cm, releases the handle, picks the utensil, places it entirely inside, releases it, and pushes the drawer shut. Vary cabinet position by $\pm3$\,cm and yaw by $\pm10^\circ$, and utensil position by $\pm5$\,cm and yaw by $\pm30^\circ$. Success requires the utensil fully contained and the drawer-front gap $\leq5$\,mm for 2\,s after both grippers release. Record the final gap using a calibrated side view or displacement sensor. A utensil protruding from the drawer, a missed grasp, and a closed but empty drawer fail the episode.
+
+\paragraph{Peg assembly (90\,s).}
+Use a rigid peg of nominal diameter 10\,mm and a 12\,mm-diameter hole at least 20\,mm deep, giving 1\,mm radial clearance. These dimensions must be checked against gripper accessibility before collection. The fixture begins loose on the table; one arm grasps and holds it, while the other picks the peg, rotates it to the hole axis, approaches, inserts, and releases the peg. Vary fixture position by $\pm3$\,cm and yaw by $\pm15^\circ$ and peg position by $\pm5$\,cm and yaw by $\pm45^\circ$. Success requires insertion depth $\geq15$\,mm and stable seating for 2\,s after the inserting gripper releases; the support arm may keep holding the fixture. Use a calibrated depth mark or insertion sensor. Rim contact without seating, fixture drops, and an unseated peg held in place do not count.
+
+\paragraph{Towel folding (120\,s).}
+Place a $40\times40$\,cm square cloth on a board with a marked target fold line. Both arms grasp the two near corners, lift them, carry them across the midline to the opposite corners, lower the cloth, and release. Vary cloth translation by $\pm5$\,cm and in-plane rotation by $\pm20^\circ$; balanced starts include flat cloth and one shallow wrinkle, with all grasp corners initially visible. Success requires both paired-corner errors $\leq3$\,cm, the folded cloth fully on the board, and the configuration stable for 2\,s after release. Estimate the corner distances from the calibrated overhead image, and manually audit occluded corners. Merely bringing grippers together without a correct fold fails.
+
+\paragraph{Surface wiping (90\,s).}
+Use a rigid $30\times30$\,cm board bearing a $10\times10$\,cm washable marker region and a sponge initially on the table. One arm braces the board; the other picks the sponge, establishes contact, sweeps the marked area, and lifts the sponge for inspection. Vary board pose by $\pm3$\,cm and $\pm10^\circ$, sponge position by $\pm5$\,cm, and mask position by $\pm2$\,cm within the reachable board area. Compute removal as $1-A_{\rm after}/A_{\rm before}$ from registered, consistently illuminated images and a fixed segmentation rule. Success requires removal $\geq90\%$ and board displacement $\leq2$\,cm; the support arm may remain in contact. Inspect both masks to reject apparent success caused by occlusion, glare, or the sponge covering the marks.
+
+\paragraph{Cable plugging (90\,s).}
+Use a keyed low-voltage connector on a flexible cable and a movable mating socket fixture. One arm grasps and stabilizes the fixture. The other picks the connector body from the table, rotates the key into alignment, approaches the socket, inserts, and releases. Vary fixture pose by $\pm3$\,cm and $\pm15^\circ$ and connector pose by $\pm5$\,cm and $\pm45^\circ$; balance straight and slack-loop cable layouts. Success requires a seating-mark gap $\leq2$\,mm and connection confirmation from a low-voltage continuity circuit for 2\,s after the inserting gripper releases. The support arm may retain its grasp. A flush-looking but electrically unseated connector fails. Connector geometry, cable length, and continuity threshold are fixed before evaluation.
+
+\paragraph{Trial protocol and task manifest.}
+For every task, construct ten held-out layouts with three repeats each, yielding 30 trials per method; use the same layouts for all methods and randomize execution order. Fix the demonstration identities and count, cameras, control frequency, timeout, and retry budget before comparison. Allow at most two additional attempts after a detected primitive failure within the same episode deadline, for every feedback-capable method. Feedback off keeps the same action budget but disables feedback-triggered replanning. No manual reset is allowed within a scored episode. Human assistance, drops outside the support area, safety stops, and timeouts are failures. Log initial object poses, instruction, per-arm states, commands, primitive boundaries, contract outcomes, interventions, final metrics, and synchronized videos. Success is full-episode completion; report successes/30, paired method differences, uncertainty, retries, and time, with failure stages retained. These settings are proposed and must be frozen before outcomes are observed. The table's decimals are illustrative probabilities, not invented success counts; measured rates must follow actual records. Planning ranges remain $\pm20$ points, uncalibrated and clipped to $[0,100]$.
+
+\subsection{Statistical Tests}
+
+For all matched simulator comparisons, use paired initial states and seeds,
+report per-task success with confidence intervals and paired differences, and
+keep failed or timed-out trials in the denominator. Report training-seed
+variation separately from episode variation. Similarity or ``no difference''
+claims require a predeclared equivalence margin and adequate power, not merely
+a nonsignificant test. Source protocols and task manifests accompany all public
+reference values. Component, memory, and correction claims require their
+respective controlled interventions; a two-dimensional feature plot alone is
+not evidence of causality.
